@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from course_builder.database.course_manager import CourseManager
 
 
-class NewCourseInput(BaseModel):
+class CreateCourseInput(BaseModel):
     user_description: str
     user_expected_result: str  # i.e. become an expert/become conversational
     user_experience_level: str  # i.e. beginner, intermediate, advanced
@@ -18,7 +18,7 @@ class NewCourseInput(BaseModel):
 
 
 class IdManager:
-    def __init__(self, course_input: NewCourseInput):
+    def __init__(self, course_input: CreateCourseInput):
         self.course_input = course_input
 
     def get_course_id(self) -> str:
@@ -32,7 +32,7 @@ class IdManager:
         return section_ids[section_index]
 
 
-def create_course(course_input: NewCourseInput, user_id: str) -> None:
+async def create_course(course_input: CreateCourseInput, user_id: str) -> None:
     course_manager = CourseManager(table_name="courses", user_id=user_id)
     id_manager = IdManager(course_input)
 
