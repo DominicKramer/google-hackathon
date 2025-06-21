@@ -1,6 +1,8 @@
 from typing import Dict, List
-from course_builder.database.course_manager import CourseManager
+
 from pydantic import BaseModel
+
+from course_builder.database.course_manager import CourseManager
 
 
 class NewCourseInput(BaseModel):

@@ -1,8 +1,8 @@
-from dotenv import dotenv_values
 import asyncio
 from typing import Dict, List, TypedDict
 
 from celery import Celery
+from dotenv import dotenv_values
 
 DOT_ENV_VALUES = dotenv_values()
 CELERY_BROKER_URL = DOT_ENV_VALUES["CELERY_BROKER_URL"]

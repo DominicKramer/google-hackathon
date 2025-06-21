@@ -1,6 +1,8 @@
 from typing import Dict, List, Literal
-from course_builder.database.util import get_traditional_client
+
 from pydantic import BaseModel
+
+from course_builder.database.util import get_traditional_client
 
 Status = Literal["RUNNING", "DONE"]
 

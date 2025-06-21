@@ -1,12 +1,14 @@
 import sys
+from typing import Any, Awaitable, Callable, cast
+
 import uvicorn
+from dotenv import dotenv_values
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
 from jose import JWTError, jwt
-from typing import Callable, Awaitable, Any, cast
 from pydantic import BaseModel
-from dotenv import dotenv_values
-from course_builder.api.worker import create_course, NewCourseInput
+
+from course_builder.api.worker import NewCourseInput, create_course
 from course_builder.database.course_manager import CourseManager
 
 DOT_ENV_VALUES = dotenv_values()
