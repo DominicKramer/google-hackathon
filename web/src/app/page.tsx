@@ -6,7 +6,6 @@ export default function RootPage() {
             {/* Toolbar */}
             <div className={styles.toolbar}>
                 <a href="/" className={styles.logo}>
-                    LearnAI
                 </a>
                 <div className={styles.authButtons}>
                     <a href="/auth/login" className={styles.loginButton}>
@@ -33,11 +32,8 @@ export default function RootPage() {
                         and we'll create a custom curriculum just for you.
                     </p>
                     <div className={styles.buttonContainer}>
-                        <a href="#" className={styles.primaryButton}>
+                        <a href="/auth/sign-up" className={styles.primaryButton}>
                             Get Started
-                        </a>
-                        <a href="#" className={styles.secondaryButton}>
-                            Learn More
                         </a>
                     </div>
                 </div>
@@ -99,11 +95,11 @@ export default function RootPage() {
                             </div>
                             <div className={styles.featureContent}>
                                 <h3 className={styles.featureTitle}>
-                                    AI-Powered Progress
+                                    AI-Powered Learning
                                 </h3>
                                 <p className={styles.featureDescription}>
-                                    Our AI adapts to your progress and adjusts
-                                    the content to ensure optimal learning.
+                                    Content tailored to your learning style and
+                                    pace to ensure optimal learning.
                                 </p>
                             </div>
                         </div>
@@ -126,11 +122,11 @@ export default function RootPage() {
                             </div>
                             <div className={styles.featureContent}>
                                 <h3 className={styles.featureTitle}>
-                                    Interactive Learning
+                                    Match your timeline
                                 </h3>
                                 <p className={styles.featureDescription}>
-                                    Engage with interactive exercises, quizzes,
-                                    and real-world projects.
+                                    Get a course that fits your
+                                    schedule and learning pace.
                                 </p>
                             </div>
                         </div>
@@ -153,11 +149,12 @@ export default function RootPage() {
                             </div>
                             <div className={styles.featureContent}>
                                 <h3 className={styles.featureTitle}>
-                                    Expert Support
+                                    Carefully Crafted Content
                                 </h3>
                                 <p className={styles.featureDescription}>
-                                    Get help from AI tutors and connect with a
-                                    community of learners.
+                                    Our AI carefully curates content from the
+                                    best sources to ensure you get the most
+                                    out of your learning.
                                 </p>
                             </div>
                         </div>
@@ -171,10 +168,10 @@ export default function RootPage() {
                     <h2 className={styles.ctaTitle}>
                         <span>Ready to start your learning journey?</span>
                         <span className={styles.titleHighlight}>
-                            Start your free trial today.
+                            Start for free today.
                         </span>
                     </h2>
-                    <a href="#" className={styles.ctaButton}>
+                    <a href="/auth/sign-up" className={styles.ctaButton}>
                         Get started
                     </a>
                 </div>
