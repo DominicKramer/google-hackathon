@@ -74,6 +74,42 @@ export default function Section() {
         );
     }
 
+    let markdown = section.contentMd ?? "";
+    const references = section.references ?? [];
+    
+    const referenceMap = new Map();
+    for (const ref of references) {
+        referenceMap.set(ref.orderIndex + 1, ref);
+    }
+    
+    // Replace [n] and [n, ...] patterns with markdown links
+    markdown = markdown.replace(/\[(\d+(?:,\s*\d+)*)\]/g, (match, numbersString) => {
+        // Split the numbers and process each one
+        const numbers = numbersString.split(/,\s*/).map((num: string) => parseInt(num.trim()));
+        let result = '[';
+        
+        for (let i = 0; i < numbers.length; i++) {
+            const key = numbers[i];
+            const reference = referenceMap.get(key);
+            
+            if (reference) {
+                // Add the link for this number
+                result += `[${key}](${reference.url})`;
+            } else {
+                // Keep the original number if no reference found
+                result += key;
+            }
+            
+            // Add comma separator if not the last number
+            if (i < numbers.length - 1) {
+                result += ', ';
+            }
+        }
+        
+        result += ']';
+        return result;
+    });
+
     return (
         <div className={styles.sectionContainer}>
             <h1 className={styles.sectionTitle}>
@@ -81,7 +117,7 @@ export default function Section() {
             </h1>
             <hr className={styles.divider} />
             <div className={styles.sectionContent}>
-                <MarkdownView markdown={section.contentMd ?? ""} />
+                <MarkdownView markdown={markdown} />
             </div>
             
             {section.references && section.references.length > 0 && (
