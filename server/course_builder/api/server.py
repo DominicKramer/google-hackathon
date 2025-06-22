@@ -71,7 +71,7 @@ async def api_create_course(
     input: CreateCourseRequest, request: Request
 ) -> CreateCourseResponse:
     user_id = request.state.user
-    course_manager = CourseManager(table_name="courses", user_id=user_id)
+    course_manager = CourseManager(user_id=user_id)
     placeholder_ids = await course_manager.add_course_placeholder(
         user_description=input.description,
         user_expected_result=input.expectedResult,

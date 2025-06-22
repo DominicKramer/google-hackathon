@@ -1,5 +1,5 @@
 from typing import List, Dict
-from google.adk.agents import SequentialAgent
+from google.adk.agents import SequentialAgent, ParallelAgent
 from course_builder.database.course_manager import CourseManager
 from course_builder.agents.write_course_overview_agent import (
     create_write_course_overview_agent,
@@ -26,7 +26,8 @@ class IdManager:
         return self.placeholder_week_ids[week_index]
 
     def get_section_id(self, week_index: int, section_index: int) -> str:
-        section_ids = self.placeholder_week_ids[week_index]
+        week_id = self.placeholder_week_ids[week_index]
+        section_ids = self.placeholder_week_sections[week_id]
         return section_ids[section_index]
 
 
@@ -52,22 +53,25 @@ def create_write_course_agent(
         course_manager=course_manager,
     )
 
-    write_section_agents = [
-        create_write_section_agent(
-            week=week,
-            section=section,
-            reading_time_min=reading_time_min,
-            section_id=id_manager.get_section_id(week, section),
-            course_manager=course_manager,
-        )
-        for week in range(user_num_weeks)
-        for section in range(num_sections_per_week)
-    ]
+    write_all_sections_agent = ParallelAgent(
+        name="write_all_section_agent",
+        sub_agents=[
+            create_write_section_agent(
+                week=week,
+                section=section,
+                reading_time_min=reading_time_min,
+                section_id=id_manager.get_section_id(week, section),
+                course_manager=course_manager,
+            )
+            for week in range(user_num_weeks)
+            for section in range(num_sections_per_week)
+        ],
+    )
 
     return SequentialAgent(
         name="root_agent",
         sub_agents=[
             write_course_overview_agent,
-            *write_section_agents,
+            write_all_sections_agent,
         ],
     )

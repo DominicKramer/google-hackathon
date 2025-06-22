@@ -27,12 +27,7 @@ export default async function AppLayout({
                         <Button>New course</Button>
                     </Link>
                     <Link href="/app/courses">
-                        <Button
-                            flat
-                            style={{
-                                marginTop: "12px",
-                            }}
-                        >
+                        <Button flat>
                             My Courses
                         </Button>
                     </Link>

@@ -3,6 +3,7 @@ from google.adk.tools import google_search
 from google.adk.agents.callback_context import CallbackContext
 from course_builder.agents.util import parse_json_output
 from course_builder.database.course_manager import CourseManager
+from course_builder.database.course_manager import CoursePlaceholderReference
 from pydantic import BaseModel
 from typing import List
 
@@ -33,17 +34,35 @@ def create_write_section_agent(
     output_key = f"week_{week}_section_{section}_content"
 
     def after_agent_callback(callback_context: CallbackContext):
-        section_content = parse_json_output(
+        section_content, raw_output = parse_json_output(
             output_key=output_key,
             callback_context=callback_context,
             output_type=SectionContent,
         )
+
+        if section_content is None:
+            section_content = SectionContent(
+                section_title="Could not generate section content",
+                section_content=raw_output,
+                references=[],
+            )
+
         course_manager.update_section(
             section_id=section_id,
             status="DONE",
             title=section_content.section_title,
             content_md=section_content.section_content,
             reading_time_min=reading_time_min,
+        )
+        course_manager.add_section_references(
+            section_id=section_id,
+            references=[
+                CoursePlaceholderReference(
+                    url=reference.url,
+                    title=reference.title,
+                )
+                for reference in section_content.references
+            ],
         )
 
     return Agent(

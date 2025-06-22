@@ -40,6 +40,55 @@
     margin-right: auto;
 }
 
+.referencesSection {
+    margin: 32px 0;
+    padding: 24px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.referencesTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+.referencesList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.referenceItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.referenceOrder {
+    font-weight: 600;
+    color: #64748b;
+    min-width: 24px;
+    font-size: 0.9rem;
+}
+
+.referenceLink {
+    color: black;
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.referenceLink:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
 .navigationButtons {
     display: flex;
     justify-content: space-between;

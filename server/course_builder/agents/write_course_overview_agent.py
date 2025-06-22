@@ -37,11 +37,19 @@ def create_write_course_overview_agent(
     output_key = "course_outline"
 
     def after_agent_callback(callback_context: CallbackContext):
-        course_overview = parse_json_output(
+        course_overview, raw_output = parse_json_output(
             output_key=output_key,
             callback_context=callback_context,
             output_type=CourseOverview,
         )
+
+        if course_overview is None:
+            course_overview = CourseOverview(
+                course_title="Could not generate course overview",
+                course_description=raw_output,
+                weeks=[],
+            )
+
         course_manager.update_course(
             course_id=course_id,
             status="DONE",

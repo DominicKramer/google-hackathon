@@ -37,9 +37,8 @@ class CoursePlaceholderResult(BaseModel):
 
 
 class CourseManager:
-    def __init__(self, table_name: str, user_id: str):
+    def __init__(self, user_id: str):
         self.client = get_traditional_client()
-        self.table_name = table_name
         self.user_id = user_id
 
     async def add_course_placeholder(
@@ -94,7 +93,7 @@ class CourseManager:
         title: str,
         description: str,
     ):
-        self.client.table(self.table_name).update(
+        self.client.table("courses").update(
             {
                 "status": status,
                 "title": title,
@@ -110,7 +109,7 @@ class CourseManager:
         description: str,
         learning_objectives: List[str],
     ):
-        self.client.table(self.table_name).update(
+        self.client.table("weeks").update(
             {
                 "status": status,
                 "title": title,
@@ -127,7 +126,7 @@ class CourseManager:
         content_md: str,
         reading_time_min: int,
     ):
-        self.client.table(self.table_name).update(
+        self.client.table("sections").update(
             {
                 "status": status,
                 "title": title,
@@ -135,3 +134,23 @@ class CourseManager:
                 "reading_time_min": reading_time_min,
             }
         ).eq("id", section_id).execute()
+
+    def add_section_references(
+        self,
+        section_id: str,
+        references: List[CoursePlaceholderReference],
+    ):
+        if not references:
+            return
+
+        reference_data = [
+            {
+                "section_id": section_id,
+                "url": reference["url"],
+                "title": reference["title"],
+                "order_index": index,
+            }
+            for index, reference in enumerate(references)
+        ]
+
+        self.client.table("references").insert(reference_data).execute()

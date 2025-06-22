@@ -6,6 +6,7 @@ import { CourseOutline } from "@/lib/type_aliases";
 import { getCourseOutline } from "@/lib/actions";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Course({
     params,
@@ -35,6 +36,20 @@ export default function Course({
     if (!course || course.status !== "DONE") {
         return (
             <div className={styles.skeletonContainer}>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>
+                            Course creation in progress
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <CardDescription>
+                            The course is being created.  This may take
+                            several minutes.  The course will automatically
+                            load when it is ready.
+                        </CardDescription>
+                    </CardContent>
+                </Card>
                 <div className={styles.skeletonTitle} />
                 <div className={styles.skeletonDescription} />
                 
@@ -66,10 +81,10 @@ export default function Course({
     return (
         <div className={styles.courseOutlineContainer}>
             <h1 className={styles.courseTitle}>
-                {course.title || "Course Title"}
+                {course.title}
             </h1>
             <p className={styles.courseDescription}>
-                {course.description || "Course description will appear here..."}
+                {course.description}
             </p>
             
             <div className={styles.weeksContainer}>
@@ -89,13 +104,15 @@ export default function Course({
                                 <div key={section.sectionId} className={styles.sectionItem}>
                                     <div className={styles.sectionContent}>
                                         <h3 className={styles.sectionItemTitle}>
-                                            {section.title || `Section ${section.orderIndex + 1}`}
+                                            {section.title || `Day ${section.orderIndex + 1}`}
                                         </h3>
-                                        {section.description && (
-                                            <p className={styles.sectionItemDescription}>
-                                                {section.description}
-                                            </p>
-                                        )}
+                                        <p className={styles.sectionItemDescription}>
+                                            {
+                                                section.status === "DONE" ?
+                                                section.description :
+                                                "Writing section content.  This may take several minutes..."
+                                            }
+                                        </p>
                                         {section.readingTimeMinutes > 0 && (
                                             <span className={styles.sectionItemReadingTime}>
                                                 {section.readingTimeMinutes} min read
@@ -103,12 +120,15 @@ export default function Course({
                                         )}
                                     </div>
                                     <Link href={`/app/courses/course/${courseId}/section/${section.sectionId}`}>
-                                        <Button 
-                                            className={styles.navigateButton}
-                                            loading={section.status !== "DONE"}
-                                        >
-                                            →
-                                        </Button>
+                                        {
+                                            section.status === "DONE" ? (
+                                                <Button className={styles.navigateButton}>
+                                                    →
+                                                </Button>
+                                            ) : (
+                                                <div className={styles.skeletonButton} />
+                                            )
+                                        }
                                     </Link>
                                 </div>
                             ))}

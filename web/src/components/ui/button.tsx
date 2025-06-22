@@ -3,7 +3,6 @@ import clsx from "clsx";
 
 export interface ButtonProps extends React.ComponentProps<"button"> {
     flat?: boolean;
-    loading?: boolean;
 }
 
 export function Button(props: ButtonProps) {
@@ -12,12 +11,10 @@ export function Button(props: ButtonProps) {
             className={clsx(undefined, {
                 [styles.button]: !props.flat,
                 [styles.flat]: props.flat,
-                [styles.loading]: props.loading,
             })}
-            disabled={props.loading}
-            {...{ ...props, flat: undefined, loading: undefined }}
+            {...{ ...props, flat: undefined }}
         >
-            {props.loading ? "..." : props.children}
+            {props.children}
         </button>
     );
 }

@@ -29,7 +29,7 @@ SESSION_ID = "session-1"
 
 async def create_course(course_input: CreateCourseInput, user_id: str) -> str | None:
     print("Creating course...")
-    course_manager = CourseManager(table_name="courses", user_id=user_id)
+    course_manager = CourseManager(user_id=user_id)
     write_course_agent = create_write_course_agent(
         course_id=course_input.placeholder_course_id,
         user_num_weeks=course_input.user_num_weeks,

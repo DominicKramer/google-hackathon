@@ -83,6 +83,30 @@ export default function Section() {
             <div className={styles.sectionContent}>
                 <MarkdownView markdown={section.contentMd ?? ""} />
             </div>
+            
+            {section.references && section.references.length > 0 && (
+                <div className={styles.referencesSection}>
+                    <h3 className={styles.referencesTitle}>References</h3>
+                    <div className={styles.referencesList}>
+                        {section.references
+                            .sort((a, b) => a.orderIndex - b.orderIndex)
+                            .map((reference) => (
+                                <div key={reference.referenceId} className={styles.referenceItem}>
+                                    <span className={styles.referenceOrder}>{reference.orderIndex + 1}: </span>
+                                    <a 
+                                        href={reference.url} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className={styles.referenceLink}
+                                    >
+                                        {reference.title || reference.url}
+                                    </a>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+            )}
+            
             <div className={styles.navigationButtons}>
                 {section.previousSectionId && (
                     <Link
