@@ -5,8 +5,9 @@ from celery import Celery
 from dotenv import dotenv_values
 
 from course_builder.capabilities.create_course import CreateCourseInput
-from course_builder.capabilities.create_course import \
-    create_course as create_course_impl
+from course_builder.capabilities.create_course import (
+    create_course as create_course_impl,
+)
 
 DOT_ENV_VALUES = dotenv_values()
 CELERY_BROKER_URL = DOT_ENV_VALUES["CELERY_BROKER_URL"]
@@ -31,7 +32,7 @@ class NewCourseInput(TypedDict):
     placeholder_week_sections: Dict[str, List[str]]
 
 
-@celery.task(bind=True, name="create_course")
+@celery.task(bind=False, name="create_course")
 def create_course(course_input: NewCourseInput, user_id: str) -> None:
     asyncio.run(
         create_course_impl(

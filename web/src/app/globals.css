@@ -1,0 +1,74 @@
+:root {
+    --header-height: 64px;
+    --background: #ffffff;
+    --foreground: #171717;
+    --border: #aaaaaa;
+    --dark-accent: #0057af;
+    --accent: #0070f3;
+    --accent-hover: #0057af;
+    --accent-active: #2693ff;
+    --white: #ffffff;
+    --spacing-xsmall: 2px;
+    --spacing-small: 4px;
+    --spacing-medium: 8px;
+    --spacing-large: 16px;
+    --spacing-xlarge: 32px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
+}
+
+html,
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: dark;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+form p {
+    color: #d32f2f;
+    font-size: 1rem;
+    margin: 8px 0 0 0;
+}
+
+.auth-link {
+    color: #111;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+}

@@ -1,0 +1,195 @@
+.formContainer {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.heading {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #222;
+}
+
+.input {
+    padding: 10px 14px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.textarea {
+    padding: 10px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    min-height: 60px;
+    width: 100%;
+    margin-bottom: 8px;
+    resize: none;
+}
+
+.goalsSection {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 8px;
+}
+
+.goalsHeader {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.goalsInputRow {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.addGoalBtn {
+    padding: 8px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.goalsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.goalItem {
+    background: #e0e7ef;
+    border-radius: 6px;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.98rem;
+}
+
+.removeGoalBtn {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+.suggestedGoals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.suggestedGoalBtn {
+    background: #e0e7ef;
+    color: #4f46e5;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.98rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.suggestedGoalBtn:hover {
+    background: #4f46e5;
+    color: #fff;
+}
+
+.resultBtns {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.resultBtn {
+    background: #e0e7ef;
+    color: #0057af;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.selectedResultBtn {
+    background: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.sliderRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.slider {
+    flex: 1;
+    accent-color: #2693ff;
+    height: 4px;
+}
+
+.sliderLabels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.sliderLabel {
+    flex: 1;
+    text-align: center;
+}
+
+.timeRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.timeLabel {
+    font-size: 1rem;
+    color: #444;
+}
+
+.submitBtn {
+    background: #2693ff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.submitBtn:disabled {
+    background: #b6e0fe;
+    color: #888;
+    cursor: not-allowed;
+}

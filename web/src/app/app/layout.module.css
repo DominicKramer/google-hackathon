@@ -1,0 +1,15 @@
+.contentContainer {
+    margin-top: calc(var(--header-height) + 16px);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.topbarLeft {
+    display: flex;
+    gap: 16px;
+}

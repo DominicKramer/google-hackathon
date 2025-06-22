@@ -1,5 +1,4 @@
-from typing import Dict, List, Literal
-
+from typing import Dict, List, Literal, TypedDict
 from pydantic import BaseModel
 
 from course_builder.database.util import get_traditional_client
@@ -7,12 +6,12 @@ from course_builder.database.util import get_traditional_client
 Status = Literal["RUNNING", "DONE"]
 
 
-class CoursePlaceholderReference(BaseModel):
+class CoursePlaceholderReference(TypedDict):
     url: str
     title: str
 
 
-class CoursePlaceholderSection(BaseModel):
+class CoursePlaceholderSection(TypedDict):
     title: str
     description: str
     content_md: str
@@ -20,7 +19,7 @@ class CoursePlaceholderSection(BaseModel):
     references: List[CoursePlaceholderReference]
 
 
-class CoursePlaceholderWeek(BaseModel):
+class CoursePlaceholderWeek(TypedDict):
     title: str
     description: str
     learning_objectives: List[str]
@@ -125,7 +124,6 @@ class CourseManager:
         section_id: str,
         status: Status,
         title: str,
-        description: str,
         content_md: str,
         reading_time_min: int,
     ):
@@ -133,7 +131,6 @@ class CourseManager:
             {
                 "status": status,
                 "title": title,
-                "description": description,
                 "content_md": content_md,
                 "reading_time_min": reading_time_min,
             }

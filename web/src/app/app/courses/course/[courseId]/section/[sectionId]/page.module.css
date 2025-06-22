@@ -1,0 +1,56 @@
+.sectionContainer {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 32px 24px;
+}
+
+.sectionTitle {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2563eb;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+}
+
+.sectionTitleWriting {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background: #e5e7eb;
+    margin: 24px auto;
+    width: 80%;
+}
+
+.sectionContent {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-top: 24px;
+    margin-bottom: 48px;
+}
+
+.sectionContentWriting {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navigationButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.audioPlayerContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

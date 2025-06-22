@@ -219,7 +219,12 @@ begin
             _course_id,
             _week->>'title',
             _week->>'description',
-            coalesce(_week->'learning_objectives', '[]'::jsonb),
+            coalesce(
+                array(
+                    select jsonb_array_elements_text(_week->'learning_objectives')
+                ),
+                array[]::text[]
+            ),
             _week_i
         );
 
