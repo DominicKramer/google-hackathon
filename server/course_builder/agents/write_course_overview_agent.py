@@ -3,7 +3,10 @@ from google.adk.tools import google_search
 from google.adk.agents.callback_context import CallbackContext
 from course_builder.database.course_manager import CourseManager
 from course_builder.agents.util import parse_json_output
+from course_builder.logger import get_system_logger
+from course_builder.agents.id_manager import IdManager
 from pydantic import BaseModel
+import json
 from typing import List
 
 from dotenv import load_dotenv
@@ -32,11 +35,18 @@ class CourseOverview(BaseModel):
 
 def create_write_course_overview_agent(
     course_id: str,
+    user_description: str,
+    user_expected_result: str,  # i.e. become an expert/become conversational
+    user_experience_level: str,  # i.e. beginner, intermediate, advanced
+    user_min_per_day: int,
     course_manager: CourseManager,
+    id_manager: IdManager,
 ):
     output_key = "course_outline"
 
     def after_agent_callback(callback_context: CallbackContext):
+        logger = get_system_logger()
+
         course_overview, raw_output = parse_json_output(
             output_key=output_key,
             callback_context=callback_context,
@@ -50,12 +60,63 @@ def create_write_course_overview_agent(
                 weeks=[],
             )
 
+        logger.info(
+            f"After writing the course overview, the raw output is:\n{raw_output}\nAnd the course overview is:\n{course_overview.model_dump_json(indent=2)}"
+        )
+
+        delta = {
+            f"week_{week_index}_section_{section_index}_instructions": f"""
+<user-description-of-what-they-want-to-learn>
+{user_description}
+</user-description-of-what-they-want-to-learn>
+
+<user-expected-result>
+{user_expected_result}
+</user-expected-result>
+
+<user-experience-level>
+{user_experience_level}
+</user-experience-level>
+
+<section-title>
+{section.section_title}
+</section-title>
+
+<required-reading-time-in-minutes>
+{user_min_per_day}
+</required-reading-time-in-minutes>
+
+<section-instructions>
+{section.section_instructions}
+</section-instructions>
+"""
+            for week_index, week in enumerate(course_overview.weeks)
+            for section_index, section in enumerate(week.sections)
+        }
+        callback_context.state.update(delta)
+
+        logger.info(
+            f"After writing the course overview, created the state delta:\n{json.dumps(delta, indent=2)}"
+        )
+        logger.info(
+            f"After writing the course overview and updating the state delta, the status is:\n{json.dumps(callback_context.state.to_dict(), indent=2)}"
+        )
+
         course_manager.update_course(
             course_id=course_id,
             status="DONE",
             title=course_overview.course_title,
             description=course_overview.course_description,
         )
+
+        for week_index, week in enumerate(course_overview.weeks):
+            course_manager.update_week(
+                week_id=id_manager.get_week_id(week_index),
+                status="DONE",
+                title=week.week_title,
+                description=week.week_description,
+                learning_objectives=week.learning_objectives,
+            )
 
     return Agent(
         name="course_overview_writer",
@@ -79,11 +140,11 @@ the actual content for the course.
 The course outline MUST contain:
 * The course title
 * A short one paragraph description of the course
-* For each week:
+* For each week you MUST write:
   * The week's title
   * A one paragraph description of the week's content
   * The learning objectives for the week
-  * For each section in the week:
+  * For each section in the week you MUST write:
     * The section's title
     * Detailed instructions that will be used by a writer to write the full
       content for the section.  These instructions MUST clearly detail what

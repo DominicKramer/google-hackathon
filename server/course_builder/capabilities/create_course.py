@@ -32,9 +32,12 @@ async def create_course(course_input: CreateCourseInput, user_id: str) -> str | 
     course_manager = CourseManager(user_id=user_id)
     write_course_agent = create_write_course_agent(
         course_id=course_input.placeholder_course_id,
+        user_description=course_input.user_description,
+        user_expected_result=course_input.user_expected_result,
+        user_experience_level=course_input.user_experience_level,
+        user_min_per_day=course_input.user_min_per_day,
         user_num_weeks=course_input.user_num_weeks,
         num_sections_per_week=5,
-        reading_time_min=course_input.user_min_per_day,
         placeholder_course_id=course_input.placeholder_course_id,
         placeholder_week_ids=course_input.placeholder_week_ids,
         placeholder_week_sections=course_input.placeholder_week_sections,

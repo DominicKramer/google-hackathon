@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export default function Courses() {
-    const [courses, setCourses] = useState<CourseMetadata[]>([]);
+    const [courses, setCourses] = useState<CourseMetadata[] | null>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -43,7 +43,7 @@ export default function Courses() {
         router.push(`/app/courses/course/${courseId}`);
     };
 
-    if (courses.length === 0) {
+    if (courses !== null && courses.length === 0) {
         return (
             <div className={styles.emptyState}>
                 <h2 className={styles.emptyTitle}>No courses yet</h2>
@@ -59,7 +59,7 @@ export default function Courses() {
 
     return (
         <div className={styles.courseList}>
-            {courses.map((course) => (
+            {courses?.map((course) => (
                 course.status === "DONE" ? (
                     <Card key={course.id}>
                         <CardHeader>

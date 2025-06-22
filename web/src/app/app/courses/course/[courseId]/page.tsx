@@ -33,7 +33,7 @@ export default function Course({
         pollCourse();
     }, [courseId]);
 
-    if (!course || course.status !== "DONE") {
+    if (course !== null && course.status !== "DONE") {
         return (
             <div className={styles.skeletonContainer}>
                 <Card>
@@ -74,6 +74,15 @@ export default function Course({
                         </div>
                     ))}
                 </div>
+            </div>
+        );
+    }
+
+    if (course === null) {
+        return (
+            <div className={styles.skeletonContainer}>
+                <div className={styles.skeletonTitle} />
+                <div className={styles.skeletonDescription} />
             </div>
         );
     }

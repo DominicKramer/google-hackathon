@@ -4,7 +4,9 @@ from google.adk.agents.callback_context import CallbackContext
 from course_builder.agents.util import parse_json_output
 from course_builder.database.course_manager import CourseManager
 from course_builder.database.course_manager import CoursePlaceholderReference
+from course_builder.logger import get_system_logger
 from pydantic import BaseModel
+import json
 from typing import List
 
 from dotenv import load_dotenv
@@ -31,9 +33,18 @@ def create_write_section_agent(
     section_id: str,
     course_manager: CourseManager,
 ):
+    input_key = f"week_{week}_section_{section}_instructions"
     output_key = f"week_{week}_section_{section}_content"
 
+    def before_agent_callback(callback_context: CallbackContext):
+        logger = get_system_logger()
+        logger.info(
+            f"Before writing section {week} {section}, input_key={input_key}, and the state is:\n{json.dumps(callback_context.state.to_dict(), indent=2)}"
+        )
+
     def after_agent_callback(callback_context: CallbackContext):
+        logger = get_system_logger()
+
         section_content, raw_output = parse_json_output(
             output_key=output_key,
             callback_context=callback_context,
@@ -46,6 +57,10 @@ def create_write_section_agent(
                 section_content=raw_output,
                 references=[],
             )
+
+        logger.info(
+            f"After writing section {week} {section}, input_key={input_key}, raw_output={raw_output}, and the section content is:\n{section_content.model_dump_json(indent=2)}"
+        )
 
         course_manager.update_section(
             section_id=section_id,
@@ -70,7 +85,8 @@ def create_write_section_agent(
         model=MODEL_NAME,
         instruction=f"""
 You are an expert at writing technical content.  Your job is to write
-the content for week {week} section {section} of the course overview in {{course_outline}}
+the content for week {week} section {section} of the course overview
+as specified in {{{input_key}?}}.
 
 You MUST use the Google Search Tool to gather all information needed
 prior to writing the content.
@@ -96,4 +112,5 @@ Your result MUST be in JSON format using the following schema:
         output_key=output_key,
         tools=[google_search],
         after_agent_callback=after_agent_callback,
+        before_agent_callback=before_agent_callback,
     )
