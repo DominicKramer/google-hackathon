@@ -1,9 +1,8 @@
-from typing import Type, TypeVar
-
-from pydantic import BaseModel
-from typing import Tuple
+from typing import Tuple, Type, TypeVar
 
 from google.adk.agents.callback_context import CallbackContext
+from pydantic import BaseModel
+
 from course_builder.logger import get_system_logger
 
 T = TypeVar("T", bound=BaseModel)

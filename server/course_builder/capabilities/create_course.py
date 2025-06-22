@@ -1,13 +1,12 @@
 from typing import Dict, List
 
-from pydantic import BaseModel
-
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
+from pydantic import BaseModel
 
-from course_builder.database.course_manager import CourseManager
 from course_builder.agents.write_course_agent import create_write_course_agent
+from course_builder.database.course_manager import CourseManager
 
 
 class CreateCourseInput(BaseModel):

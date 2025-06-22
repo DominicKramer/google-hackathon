@@ -1,11 +1,13 @@
-from typing import List, Dict
-from google.adk.agents import SequentialAgent, ParallelAgent
-from course_builder.database.course_manager import CourseManager
-from course_builder.agents.write_course_overview_agent import (
-    create_write_course_overview_agent,
-)
-from course_builder.agents.write_section_agent import create_write_section_agent
+from typing import Dict, List
+
+from google.adk.agents import ParallelAgent, SequentialAgent
+
 from course_builder.agents.id_manager import IdManager
+from course_builder.agents.write_course_overview_agent import \
+    create_write_course_overview_agent
+from course_builder.agents.write_section_agent import \
+    create_write_section_agent
+from course_builder.database.course_manager import CourseManager
 
 
 def create_write_course_agent(

@@ -1,15 +1,16 @@
-from google.adk.agents import Agent
-from google.adk.tools import google_search
-from google.adk.agents.callback_context import CallbackContext
-from course_builder.database.course_manager import CourseManager
-from course_builder.agents.util import parse_json_output
-from course_builder.logger import get_system_logger
-from course_builder.agents.id_manager import IdManager
-from pydantic import BaseModel
 import json
 from typing import List
 
 from dotenv import load_dotenv
+from google.adk.agents import Agent
+from google.adk.agents.callback_context import CallbackContext
+from google.adk.tools import google_search
+from pydantic import BaseModel
+
+from course_builder.agents.id_manager import IdManager
+from course_builder.agents.util import parse_json_output
+from course_builder.database.course_manager import CourseManager
+from course_builder.logger import get_system_logger
 
 load_dotenv()
 MODEL_NAME = "gemini-2.5-pro-preview-05-06"

@@ -1,4 +1,5 @@
 from typing import Dict, List, Literal, TypedDict
+
 from pydantic import BaseModel
 
 from course_builder.database.util import get_traditional_client
