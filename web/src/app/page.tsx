@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function RootPage() {
@@ -5,15 +6,13 @@ export default function RootPage() {
         <div className={styles.container}>
             {/* Toolbar */}
             <div className={styles.toolbar}>
-                <a href="/" className={styles.logo}>
-                </a>
                 <div className={styles.authButtons}>
-                    <a href="/auth/login" className={styles.loginButton}>
+                    <Link href="/auth/login" className={styles.loginButton}>
                         Log in
-                    </a>
-                    <a href="/auth/sign-up" className={styles.signupButton}>
+                    </Link>
+                    <Link href="/auth/sign-up" className={styles.signupButton}>
                         Sign up
-                    </a>
+                    </Link>
                 </div>
             </div>
 
@@ -29,12 +28,15 @@ export default function RootPage() {
                     <p className={styles.subtitle}>
                         Transform your learning experience with AI-powered
                         personalized courses. Tell us what you want to learn,
-                        and we'll create a custom curriculum just for you.
+                        and we&apos;ll create a custom curriculum just for you.
                     </p>
                     <div className={styles.buttonContainer}>
-                        <a href="/auth/sign-up" className={styles.primaryButton}>
+                        <Link
+                            href="/auth/sign-up"
+                            className={styles.primaryButton}
+                        >
                             Get Started
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -125,8 +127,8 @@ export default function RootPage() {
                                     Match your timeline
                                 </h3>
                                 <p className={styles.featureDescription}>
-                                    Get a course that fits your
-                                    schedule and learning pace.
+                                    Get a course that fits your schedule and
+                                    learning pace.
                                 </p>
                             </div>
                         </div>
@@ -153,8 +155,8 @@ export default function RootPage() {
                                 </h3>
                                 <p className={styles.featureDescription}>
                                     Our AI carefully curates content from the
-                                    best sources to ensure you get the most
-                                    out of your learning.
+                                    best sources to ensure you get the most out
+                                    of your learning.
                                 </p>
                             </div>
                         </div>
@@ -171,9 +173,9 @@ export default function RootPage() {
                             Start for free today.
                         </span>
                     </h2>
-                    <a href="/auth/sign-up" className={styles.ctaButton}>
+                    <Link href="/auth/sign-up" className={styles.ctaButton}>
                         Get started
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

@@ -16,14 +16,6 @@ import "prismjs/components/prism-css";
 import "prismjs/components/prism-markdown";
 import styles from "./markdown-view.module.css";
 
-import Markdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { materialLight } from "react-syntax-highlighter/dist/esm/styles/prism";
-import remarkGfm from "remark-gfm";
-import rehypeKatex from "rehype-katex";
-import remarkMath from "remark-math";
-import "katex/dist/katex.min.css"; // `rehype-katex` does not import the CSS for you
-
 export interface MarkdownViewProps {
     markdown: string;
 }
@@ -48,36 +40,6 @@ export default function MarkdownView({ markdown }: MarkdownViewProps) {
         <div
             className={styles.markdown}
             dangerouslySetInnerHTML={{ __html: htmlContent }}
-        />
-    );
-}
-
-export function MarkdownView2({ markdown }: MarkdownViewProps) {
-    return (
-        <Markdown
-            remarkPlugins={[remarkGfm, remarkMath]}
-            rehypePlugins={[rehypeKatex]}
-            children={markdown}
-            components={{
-                code(props) {
-                    const { children, className, node, ...rest } = props;
-                    const match = /language-(\w+)/.exec(className || "");
-                    return match ? (
-                        // @ts-expect-error - SyntaxHighlighter is not typed correctly
-                        <SyntaxHighlighter
-                            {...rest}
-                            PreTag="div"
-                            children={String(children).replace(/\n$/, "")}
-                            language={match[1]}
-                            style={materialLight}
-                        />
-                    ) : (
-                        <code {...rest} className={className}>
-                            {children}
-                        </code>
-                    );
-                },
-            }}
         />
     );
 }
