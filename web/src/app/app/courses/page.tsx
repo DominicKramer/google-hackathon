@@ -4,7 +4,13 @@ import { getCourses } from "@/lib/actions";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import { CourseMetadata } from "@/lib/type_aliases";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardFooter,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
@@ -20,8 +26,7 @@ export default function Courses() {
 
                 // Check if any course is still processing
                 const isProcessing = fetchedCourses.some(
-                    (course) =>
-                        course.status !== "DONE",
+                    (course) => course.status !== "DONE",
                 );
 
                 if (isProcessing) {
@@ -50,7 +55,10 @@ export default function Courses() {
                 <p className={styles.emptyDescription}>
                     Create your first course to start learning
                 </p>
-                <Button onClick={handleCreateCourse} className={styles.createButton}>
+                <Button
+                    onClick={handleCreateCourse}
+                    className={styles.createButton}
+                >
                     Create Course
                 </Button>
             </div>
@@ -59,20 +67,20 @@ export default function Courses() {
 
     return (
         <div className={styles.courseList}>
-            {courses?.map((course) => (
+            {courses?.map((course) =>
                 course.status === "DONE" ? (
                     <Card key={course.id}>
                         <CardHeader>
-                            <CardTitle>
-                                {course.title}
-                            </CardTitle>
+                            <CardTitle>{course.title}</CardTitle>
                             <CardDescription>
                                 {course.description}
                             </CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Button onClick={() => handleCourseClick(course.id)}
-                                   className={styles.courseButton}>
+                            <Button
+                                onClick={() => handleCourseClick(course.id)}
+                                className={styles.courseButton}
+                            >
                                 Continue →
                             </Button>
                         </CardFooter>
@@ -80,12 +88,10 @@ export default function Courses() {
                 ) : (
                     <Card key={course.id}>
                         <CardHeader>
-                            <CardTitle>
-                                Course creation in progress
-                            </CardTitle>
+                            <CardTitle>Course creation in progress</CardTitle>
                             <CardDescription>
-                                The course is being created.  This may take
-                                several minutes.  The course will automatically
+                                The course is being created. This may take
+                                several minutes. The course will automatically
                                 load when it is ready.
                             </CardDescription>
                         </CardHeader>
@@ -93,8 +99,8 @@ export default function Courses() {
                             <span></span>
                         </CardFooter>
                     </Card>
-                )
-            ))}
+                ),
+            )}
         </div>
     );
 }

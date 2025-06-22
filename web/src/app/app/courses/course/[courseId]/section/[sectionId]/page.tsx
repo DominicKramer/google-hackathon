@@ -24,9 +24,7 @@ export default function Section() {
             setSection(sectionData);
 
             // If any status is not DONE, start polling
-            if (
-                sectionData.status !== "DONE"
-            ) {
+            if (sectionData.status !== "DONE") {
                 const pollInterval = setInterval(async () => {
                     const updatedSection = await getSection(
                         params.courseId,
@@ -37,9 +35,7 @@ export default function Section() {
                     setSection(updatedSection);
 
                     // Stop polling if all statuses are DONE
-                    if (
-                        updatedSection.status === "DONE"
-                    ) {
+                    if (updatedSection.status === "DONE") {
                         clearInterval(pollInterval);
                     }
                 }, 30_000);
@@ -76,50 +72,53 @@ export default function Section() {
 
     let markdown = section.contentMd ?? "";
     const references = section.references ?? [];
-    
+
     const referenceMap = new Map();
     for (const ref of references) {
         referenceMap.set(ref.orderIndex + 1, ref);
     }
-    
+
     // Replace [n] and [n, ...] patterns with markdown links
-    markdown = markdown.replace(/\[(\d+(?:,\s*\d+)*)\]/g, (match, numbersString) => {
-        // Split the numbers and process each one
-        const numbers = numbersString.split(/,\s*/).map((num: string) => parseInt(num.trim()));
-        let result = '[';
-        
-        for (let i = 0; i < numbers.length; i++) {
-            const key = numbers[i];
-            const reference = referenceMap.get(key);
-            
-            if (reference) {
-                // Add the link for this number
-                result += `[${key}](${reference.url})`;
-            } else {
-                // Keep the original number if no reference found
-                result += key;
+    markdown = markdown.replace(
+        /\[(\d+(?:,\s*\d+)*)\]/g,
+        (match, numbersString) => {
+            // Split the numbers and process each one
+            const numbers = numbersString
+                .split(/,\s*/)
+                .map((num: string) => parseInt(num.trim()));
+            let result = "[";
+
+            for (let i = 0; i < numbers.length; i++) {
+                const key = numbers[i];
+                const reference = referenceMap.get(key);
+
+                if (reference) {
+                    // Add the link for this number
+                    result += `[${key}](${reference.url})`;
+                } else {
+                    // Keep the original number if no reference found
+                    result += key;
+                }
+
+                // Add comma separator if not the last number
+                if (i < numbers.length - 1) {
+                    result += ", ";
+                }
             }
-            
-            // Add comma separator if not the last number
-            if (i < numbers.length - 1) {
-                result += ', ';
-            }
-        }
-        
-        result += ']';
-        return result;
-    });
+
+            result += "]";
+            return result;
+        },
+    );
 
     return (
         <div className={styles.sectionContainer}>
-            <h1 className={styles.sectionTitle}>
-                {section.title}
-            </h1>
+            <h1 className={styles.sectionTitle}>{section.title}</h1>
             <hr className={styles.divider} />
             <div className={styles.sectionContent}>
                 <MarkdownView markdown={markdown} />
             </div>
-            
+
             {section.references && section.references.length > 0 && (
                 <div className={styles.referencesSection}>
                     <h3 className={styles.referencesTitle}>References</h3>
@@ -127,11 +126,16 @@ export default function Section() {
                         {section.references
                             .sort((a, b) => a.orderIndex - b.orderIndex)
                             .map((reference) => (
-                                <div key={reference.referenceId} className={styles.referenceItem}>
-                                    <span className={styles.referenceOrder}>{reference.orderIndex + 1}: </span>
-                                    <a 
-                                        href={reference.url} 
-                                        target="_blank" 
+                                <div
+                                    key={reference.referenceId}
+                                    className={styles.referenceItem}
+                                >
+                                    <span className={styles.referenceOrder}>
+                                        {reference.orderIndex + 1}:{" "}
+                                    </span>
+                                    <a
+                                        href={reference.url}
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         className={styles.referenceLink}
                                     >
@@ -142,7 +146,7 @@ export default function Section() {
                     </div>
                 </div>
             )}
-            
+
             <div className={styles.navigationButtons}>
                 {section.previousSectionId && (
                     <Link
@@ -155,7 +159,9 @@ export default function Section() {
                     <Button flat>Overview</Button>
                 </Link>
                 {section.nextSectionId ? (
-                    <Link href={`/app/courses/course/${params.courseId}/section/${section.nextSectionId}`}>
+                    <Link
+                        href={`/app/courses/course/${params.courseId}/section/${section.nextSectionId}`}
+                    >
                         <Button flat>Next Section →</Button>
                     </Link>
                 ) : (

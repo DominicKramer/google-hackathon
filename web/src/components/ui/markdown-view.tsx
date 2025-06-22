@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { remark } from "remark";
 import html from "remark-html";
 import Prism from "prismjs";
@@ -16,13 +16,13 @@ import "prismjs/components/prism-css";
 import "prismjs/components/prism-markdown";
 import styles from "./markdown-view.module.css";
 
-import Markdown from 'react-markdown'
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import { materialLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import remarkGfm from 'remark-gfm'
-import rehypeKatex from 'rehype-katex'
-import remarkMath from 'remark-math'
-import 'katex/dist/katex.min.css' // `rehype-katex` does not import the CSS for you
+import Markdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { materialLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkGfm from "remark-gfm";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
+import "katex/dist/katex.min.css"; // `rehype-katex` does not import the CSS for you
 
 export interface MarkdownViewProps {
     markdown: string;
@@ -30,12 +30,10 @@ export interface MarkdownViewProps {
 
 export default function MarkdownView({ markdown }: MarkdownViewProps) {
     const [htmlContent, setHtmlContent] = useState<string>("");
- 
+
     useEffect(() => {
         const processMarkdown = async () => {
-            const result = await remark()
-                .use(html)
-                .process(markdown);
+            const result = await remark().use(html).process(markdown);
             setHtmlContent(result.value.toString());
         };
 
@@ -61,24 +59,24 @@ export function MarkdownView2({ markdown }: MarkdownViewProps) {
             rehypePlugins={[rehypeKatex]}
             children={markdown}
             components={{
-            code(props) {
-                const {children, className, node, ...rest} = props
-                const match = /language-(\w+)/.exec(className || '')
-                return match ? (
-                    // @ts-ignore
-                    <SyntaxHighlighter
-                        {...rest}
-                        PreTag="div"
-                        children={String(children).replace(/\n$/, '')}
-                        language={match[1]}
-                        style={materialLight}
-                    />
-                ) : (
-                    <code {...rest} className={className}>
-                        {children}
-                    </code>
-                )
-            }
+                code(props) {
+                    const { children, className, node, ...rest } = props;
+                    const match = /language-(\w+)/.exec(className || "");
+                    return match ? (
+                        // @ts-expect-error - SyntaxHighlighter is not typed correctly
+                        <SyntaxHighlighter
+                            {...rest}
+                            PreTag="div"
+                            children={String(children).replace(/\n$/, "")}
+                            language={match[1]}
+                            style={materialLight}
+                        />
+                    ) : (
+                        <code {...rest} className={className}>
+                            {children}
+                        </code>
+                    );
+                },
             }}
         />
     );

@@ -29,7 +29,9 @@ export async function getCourses(): Promise<CourseMetadata[] | null> {
     return data;
 }
 
-export async function getCourseOutline(courseId: string): Promise<CourseOutline | null> {
+export async function getCourseOutline(
+    courseId: string,
+): Promise<CourseOutline | null> {
     console.log("calling getCourseOutline for courseId=", courseId);
 
     const supabase = await createClient();

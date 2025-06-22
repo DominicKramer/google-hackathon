@@ -5,9 +5,9 @@
     border: none;
     border-radius: 6px;
     padding: 8px 16px;
-    font-size: .875rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    transition: background-color .2s;
+    transition: background-color 0.2s;
 }
 
 .flat {
@@ -17,9 +17,9 @@
     border: none;
     border-radius: 6px;
     padding: 8px 16px;
-    font-size: .875rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    transition: background-color .2s;
+    transition: background-color 0.2s;
 }
 
 .button:hover {

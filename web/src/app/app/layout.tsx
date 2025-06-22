@@ -27,9 +27,7 @@ export default async function AppLayout({
                         <Button>New course</Button>
                     </Link>
                     <Link href="/app/courses">
-                        <Button flat>
-                            My Courses
-                        </Button>
+                        <Button flat>My Courses</Button>
                     </Link>
                 </span>
                 <AuthButton />
