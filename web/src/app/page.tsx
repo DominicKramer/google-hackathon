@@ -6,6 +6,7 @@ export default function RootPage() {
         <div className={styles.container}>
             {/* Toolbar */}
             <div className={styles.toolbar}>
+                <div className={styles.logo} />
                 <div className={styles.authButtons}>
                     <Link href="/auth/login" className={styles.loginButton}>
                         Log in

@@ -4,8 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import { CourseMetadata, CourseOutline, SectionOutline } from "./type_aliases";
 
 export async function getCourses(): Promise<CourseMetadata[] | null> {
-    console.log("calling getCourses");
-
     const supabase = await createClient();
     const {
         data: { user },
@@ -32,8 +30,6 @@ export async function getCourses(): Promise<CourseMetadata[] | null> {
 export async function getCourseOutline(
     courseId: string,
 ): Promise<CourseOutline | null> {
-    console.log("calling getCourseOutline for courseId=", courseId);
-
     const supabase = await createClient();
 
     const {
@@ -125,13 +121,6 @@ export async function getSection(
     courseId: string,
     sectionId: string,
 ): Promise<SectionOutline | null> {
-    console.log(
-        "calling getSection for courseId=",
-        courseId,
-        "and sectionId=",
-        sectionId,
-    );
-
     const supabase = await createClient();
 
     const {
