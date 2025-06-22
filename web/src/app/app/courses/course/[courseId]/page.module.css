@@ -21,6 +21,9 @@
     margin-bottom: 8px;
     display: flex;
     justify-content: center;
+    text-align: center;
+    padding-left: 32px;
+    padding-right: 32px;
 }
 
 .courseTitleWriting {
