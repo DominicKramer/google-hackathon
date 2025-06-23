@@ -1,4 +1,4 @@
-.PHONY: fix-and-check fix check dev start build gen-types
+.PHONY: fix-and-check fix check dev start build gen-types docker
 
 fix-and-check:
 	make fix
@@ -23,3 +23,6 @@ build:
 
 gen-types:
 	supabase gen types typescript > src/lib/types.ts
+
+docker:
+	docker build $(cat .env.local | sed 's@^@--build-arg @g' | paste -s -d " " -) -t web . && docker run -p 3000:3000 web
