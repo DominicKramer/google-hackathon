@@ -23,3 +23,8 @@ gcloud services enable containerregistry.googleapis.com
 gcloud services enable artifactregistry.googleapis.com
 
 gcloud run deploy web --source .
+
+gcloud auth configure-docker us-central1-docker.pkg.dev
+
+# how to get the current project id
+gcloud config list --format 'value(core.project)' 2>/dev/null
