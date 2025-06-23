@@ -26,3 +26,6 @@ gen-types:
 
 docker:
 	docker build $(cat .env.local | sed 's@^@--build-arg @g' | paste -s -d " " -) -t web . && docker run -p 3000:3000 web
+
+deploy:
+	gcloud run deploy web --source . --set-build-env-vars $(cat .env.local | sed 's@^@@g' | paste -s -d "," -) --allow-unauthenticated --region $(cat ../server/.env | grep GOOGLE_CLOUD_LOCATION | sed 's|GOOGLE_CLOUD_LOCATION=||g')
