@@ -1,0 +1,31 @@
+# Web framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# Celery for task queue
+celery>=5.3.0
+
+# Environment and configuration
+python-dotenv>=1.0.0
+
+# JWT authentication
+python-jose[cryptography]>=3.3.0
+
+# Data validation
+pydantic>=2.0.0
+
+# Database
+sqlalchemy>=2.0.0
+supabase>=2.0.0
+
+# Google AI/ADK dependencies
+google-adk>=0.1.0
+google-genai>=0.3.0
+
+# Development and linting
+ruff>=0.1.0
+pyright>=1.1.0
+isort>=5.12.0
+
+# Additional utilities
+typing-extensions>=4.8.0 
