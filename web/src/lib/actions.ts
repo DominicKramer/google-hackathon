@@ -194,7 +194,7 @@ export async function createCourse({
     } = await supabase.auth.getSession();
 
     const accessToken = session?.access_token;
-    const response = await fetch(`http://localhost:8000/api/v1/create-course`, {
+    const response = await fetch(`${process.env.API_SERVER_URL}/api/v1/create-course`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${accessToken}`,

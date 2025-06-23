@@ -1,4 +1,4 @@
-.PHONY: fix-and-check fix check dev redis celery flower
+.PHONY: fix-and-check fix check dev redis celery flower docker
 
 fix-and-check:
 	make fix
@@ -24,3 +24,6 @@ celery:
 
 flower:
 	celery --broker=redis://localhost:6379 flower --port=5555
+
+docker:
+	docker build -f Dockerfile -t api . && docker run --env-file ./.env -v "${HOME}/.config/gcloud":/app/.config/gcloud -e GOOGLE_APPLICATION_CREDENTIALS=/app/.config/gcloud/application_default_credentials.json -p 8000:8000 api

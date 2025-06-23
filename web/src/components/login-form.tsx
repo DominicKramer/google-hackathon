@@ -69,14 +69,7 @@ export function LoginForm({ ...props }: React.ComponentPropsWithoutRef<"div">) {
                                 />
                             </div>
                             <div>
-                                <div>
-                                    <Label htmlFor="password">Password</Label>
-                                    <Link href="/auth/forgot-password">
-                                        <Button flat>
-                                            Forgot your password?
-                                        </Button>
-                                    </Link>
-                                </div>
+                                <Label htmlFor="password">Password</Label>
                                 <Input
                                     id="password"
                                     type="password"
@@ -91,16 +84,28 @@ export function LoginForm({ ...props }: React.ComponentPropsWithoutRef<"div">) {
                             <Button
                                 type="submit"
                                 disabled={isLoading}
-                                style={{ width: "100%" }}
+                                style={{ width: "100%", marginTop: "12px" }}
                             >
                                 {isLoading ? "Logging in..." : "Login"}
                             </Button>
                         </div>
                         <div>
                             Don&apos;t have an account?{" "}
-                            <Link href="/auth/sign-up">
-                                <Button flat>Sign up</Button>
-                            </Link>
+                            <span style={{ float: "right" }}>
+                                <Link href="/auth/sign-up">
+                                    <Button flat>Sign up</Button>
+                                </Link>
+                            </span>
+                        </div>
+                        <div style={{ marginTop: "-8px" }}>
+                            Forgot your password?{" "}
+                            <span style={{ float: "right" }}>
+                                <Link href="/auth/forgot-password">
+                                    <Button flat>
+                                        Reset it
+                                    </Button>
+                                </Link>
+                            </span>
                         </div>
                     </form>
                 </CardContent>

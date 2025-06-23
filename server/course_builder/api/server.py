@@ -1,8 +1,9 @@
 import sys
+import os
 from typing import Any, Awaitable, Callable, cast
 
 import uvicorn
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
 from jose import JWTError, jwt
@@ -10,11 +11,15 @@ from pydantic import BaseModel
 
 from course_builder.api.worker import NewCourseInput, create_course
 from course_builder.database.course_manager import CourseManager
+from course_builder.logger import get_system_logger
 
-DOT_ENV_VALUES = dotenv_values()
-SUPABASE_JWT_SECRET = DOT_ENV_VALUES["SUPABASE_JWT_SECRET"]
-SUPABASE_JWT_ALGORITHM = DOT_ENV_VALUES["SUPABASE_JWT_ALGORITHM"]
-SUPABASE_JWT_AUDIENCE = DOT_ENV_VALUES["SUPABASE_JWT_AUDIENCE"]
+load_dotenv()
+SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")
+SUPABASE_JWT_ALGORITHM = os.getenv("SUPABASE_JWT_ALGORITHM")
+SUPABASE_JWT_AUDIENCE = os.getenv("SUPABASE_JWT_AUDIENCE")
+
+# Get the system logger
+logger = get_system_logger()
 
 app = FastAPI()
 
@@ -71,6 +76,8 @@ async def api_create_course(
     input: CreateCourseRequest, request: Request
 ) -> CreateCourseResponse:
     user_id = request.state.user
+    logger.info(f"Received create course request for user_id: {user_id}")
+
     course_manager = CourseManager(user_id=user_id)
     placeholder_ids = await course_manager.add_course_placeholder(
         user_description=input.description,
@@ -80,6 +87,7 @@ async def api_create_course(
         user_num_weeks=input.weeks,
         user_num_days_per_week=5,
     )
+
     course_input = NewCourseInput(
         user_description=input.description,
         user_expected_result=input.expectedResult,
@@ -90,7 +98,13 @@ async def api_create_course(
         placeholder_week_ids=placeholder_ids.week_ids,
         placeholder_week_sections=placeholder_ids.week_sections,
     )
+
+    logger.info(
+        f"Queueing create_course task for user_id: {user_id}, course_id: {placeholder_ids.course_id}"
+    )
     cast(Any, create_course).delay(course_input, user_id)
+    logger.info(f"Successfully queued create_course task for user_id: {user_id}")
+
     return CreateCourseResponse(course_id=placeholder_ids.course_id)
 
 

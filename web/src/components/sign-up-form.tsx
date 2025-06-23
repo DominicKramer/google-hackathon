@@ -120,9 +120,11 @@ export function SignUpForm({
                         </div>
                         <div>
                             Already have an account?{" "}
-                            <Link href="/auth/login">
-                                <Button flat>Login</Button>
-                            </Link>
+                            <span style={{ float: "right" }}>
+                                <Link href="/auth/login">
+                                    <Button flat>Login</Button>
+                                </Link>
+                            </span>
                         </div>
                     </form>
                 </CardContent>

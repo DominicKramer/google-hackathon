@@ -1,21 +1,17 @@
+import os
 import urllib.parse
 
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, inspect, text
 from supabase import create_client
 from supabase.lib.client_options import SyncClientOptions
 
-DOT_ENV_VALUES = dotenv_values()
+load_dotenv()
 
-SUPABASE_URL = DOT_ENV_VALUES["SUPABASE_URL"]
-SUPABASE_SERVICE_ROLE_KEY = DOT_ENV_VALUES["SUPABASE_SERVICE_ROLE_KEY"]
-SUPABASE_POOLER_URL = DOT_ENV_VALUES["SUPABASE_POOLER_URL"]
-SUPABASE_PASSWORD = DOT_ENV_VALUES["PG_PW"]
-
-assert SUPABASE_URL is not None
-assert SUPABASE_SERVICE_ROLE_KEY is not None
-assert SUPABASE_POOLER_URL is not None
-assert SUPABASE_PASSWORD is not None
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+SUPABASE_POOLER_URL = os.getenv("SUPABASE_POOLER_URL", "")
+SUPABASE_PASSWORD = os.getenv("PG_PW", "")
 
 ENCODED_PASSWORD = urllib.parse.quote_plus(SUPABASE_PASSWORD, safe="")
 ENCODED_POOLER_URL = SUPABASE_POOLER_URL.replace("[YOUR-PASSWORD]", ENCODED_PASSWORD)
