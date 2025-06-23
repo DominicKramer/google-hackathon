@@ -6,8 +6,9 @@ from celery import Celery
 from dotenv import load_dotenv
 
 from course_builder.capabilities.create_course import CreateCourseInput
-from course_builder.capabilities.create_course import \
-    create_course as create_course_impl
+from course_builder.capabilities.create_course import (
+    create_course as create_course_impl,
+)
 from course_builder.logger import get_system_logger
 
 load_dotenv()
@@ -21,24 +22,6 @@ celery = Celery(__name__)
 celery.conf.update(
     broker_url=CELERY_BROKER_URL,
     result_backend=CELERY_RESULT_BACKEND,
-    task_serializer="json",
-    accept_content=["json"],
-    result_serializer="json",
-    timezone="UTC",
-    enable_utc=True,
-    task_track_started=True,
-    task_time_limit=10 * 60,  # 30 minutes
-    worker_prefetch_multiplier=1,
-    worker_max_tasks_per_child=1000,
-    worker_disable_rate_limits=False,
-    task_always_eager=False,
-    task_eager_propagates=True,
-    worker_enable_remote_control=False,
-    worker_send_task_events=True,
-    task_send_sent_event=True,
-    task_ignore_result=False,
-    task_store_errors_even_if_ignored=True,
-    task_annotations={"*": {"rate_limit": "10/m"}},
 )
 
 
