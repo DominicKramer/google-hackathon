@@ -8,9 +8,6 @@ export async function createClient() {
     const supabaseUrl = getSupabaseUrl();
     const supabaseAnonKey = getSupabaseAnonKey();
 
-    console.log("createServerClient: SUPABASE_URL=", supabaseUrl);
-    console.log("createServerClient: SUPABASE_ANON_KEY=", supabaseAnonKey);
-
     return createServerClient(supabaseUrl, supabaseAnonKey, {
         cookies: {
             getAll() {
