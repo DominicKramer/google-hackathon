@@ -6,9 +6,8 @@ from celery import Celery
 from dotenv import load_dotenv
 
 from course_builder.capabilities.create_course import CreateCourseInput
-from course_builder.capabilities.create_course import (
-    create_course as create_course_impl,
-)
+from course_builder.capabilities.create_course import \
+    create_course as create_course_impl
 from course_builder.logger import get_system_logger
 
 load_dotenv()

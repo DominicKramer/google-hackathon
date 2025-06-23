@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 from typing import Any, Awaitable, Callable, cast
 
 import uvicorn

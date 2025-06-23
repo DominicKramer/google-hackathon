@@ -101,9 +101,7 @@ export function LoginForm({ ...props }: React.ComponentPropsWithoutRef<"div">) {
                             Forgot your password?{" "}
                             <span style={{ float: "right" }}>
                                 <Link href="/auth/forgot-password">
-                                    <Button flat>
-                                        Reset it
-                                    </Button>
+                                    <Button flat>Reset it</Button>
                                 </Link>
                             </span>
                         </div>

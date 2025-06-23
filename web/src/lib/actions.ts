@@ -194,19 +194,22 @@ export async function createCourse({
     } = await supabase.auth.getSession();
 
     const accessToken = session?.access_token;
-    const response = await fetch(`${process.env.API_SERVER_URL}/api/v1/create-course`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
+    const response = await fetch(
+        `${process.env.API_SERVER_URL}/api/v1/create-course`,
+        {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                description,
+                expectedResult,
+                experienceLevel,
+                minPerDay,
+                weeks,
+            }),
         },
-        body: JSON.stringify({
-            description,
-            expectedResult,
-            experienceLevel,
-            minPerDay,
-            weeks,
-        }),
-    });
+    );
     return await response.json();
 }
